@@ -1,10 +1,16 @@
 import React from 'react';
-import { Login } from './components/Login';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Auth } from './layouts/Auth';
+import Alumno from './routers/Alumno';
 
 function App() {
   return (
     <>
-      <Login />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/alumno" element={<Auth />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
