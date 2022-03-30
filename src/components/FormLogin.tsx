@@ -28,7 +28,12 @@ export const FormLogin = () => {
             const { data } = await axios.post('https://aulavirtual-apis.herokuapp.com/paths/auth', imput)
             setAuth(data)
             if (auth) {
-                cookies.set('email', email, { path: '/' })
+                
+                cookies.set('id', data.id, { path: '/' })
+                cookies.set('nombres', data.nombres, { path: '/' })
+                cookies.set('correo', data.correo, { path: '/' })
+                cookies.set('rol', data.rol, { path: '/' })
+
                 Swal.fire('Inicio de secion', 'Bienvenido', 'error')
             }
         } catch (error) {
