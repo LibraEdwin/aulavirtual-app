@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Button, Form, Stack } from 'react-bootstrap'
+import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
 
 import '../css/login.css'
@@ -12,6 +14,7 @@ const passwor = '123456'
 export const FormLogin = () => {
 
     const [imput, setImput]: any = useState({})
+    const [auth, setAuth]: any = useState({})
 
     const handleImputChange = (e: any) => {
         setImput({
@@ -20,16 +23,16 @@ export const FormLogin = () => {
         });
     }
 
-
-    const iniciarSesion = () => {
-
-        if (email == imput.email && passwor == imput.password) {
-
-            cookies.set('email', email, { path: '/' })
-
-            alert('bienvenido')
-        } else {
-            alert('Usuario o contraseña incorrecta')
+    const iniciarSesion = async () => {
+        try {
+            const { data } = await axios.post('http://localhost:8000/paths/auth', imput)
+            setAuth(data)
+            if (auth) {
+                cookies.set('email', email, { path: '/' })
+                Swal.fire('Inicio de secion', 'Bienvenido', 'error')
+            }
+        } catch (error) {
+            Swal.fire('Inicio de secion', 'usuario o contraseña incorrecta', 'error')
         }
     }
 
@@ -45,18 +48,20 @@ export const FormLogin = () => {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control
                         type='text'
-                        placeholder="Email"
-                        name="email"
+                        placeholder="Correo"
+                        name="correo"
                         onChange={handleImputChange} />
 
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control type="password"
                         placeholder="Contraseña"
-                        name="password"
+                        name="contraseña"
                         onChange={handleImputChange} />
                 </Form.Group>
-                <Button variant="primary" className='btnLogin' value="Login" onClick={() => { iniciarSesion() }}> Acceder </Button>
+                <Stack gap={2} className="col-md-13 mx-auto">
+                    <Button variant="primary" value="Login" onClick={() => { iniciarSesion() }}> Acceder </Button>
+                </Stack>
             </div>
             <hr />
             <Form.Group className="mb-3" controlId="formBasicEmail">

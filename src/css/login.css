@@ -27,14 +27,3 @@
   .h3Colegio{
     color: brown;
   }
-  .divNavBrand{
-    display: flex;
-  }
-  .divTextTitulo{
-    margin: auto;
-    padding: 10px;
-  }
-  .headerImagen{
-    height: 60px;
-    width: 55px;
-  }
