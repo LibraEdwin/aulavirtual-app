@@ -25,7 +25,7 @@ export const FormLogin = () => {
 
     const iniciarSesion = async () => {
         try {
-            const { data } = await axios.post('http://localhost:8000/paths/auth', imput)
+            const { data } = await axios.post('https://aulavirtual-apis.herokuapp.com/paths/auth', imput)
             setAuth(data)
             if (auth) {
                 cookies.set('email', email, { path: '/' })
