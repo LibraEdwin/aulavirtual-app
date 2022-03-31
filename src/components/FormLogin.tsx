@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Stack } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
 
@@ -8,15 +9,19 @@ import '../css/login.css'
 
 const cookies = new Cookies()
 
-const email = 'edwin'
-const passwor = '123456'
-
 export const FormLogin = () => {
 
-    const [imput, setImput]: any = useState({})
-    const [auth, setAuth]: any = useState({})
+    const navigate = useNavigate()
 
-    const handleImputChange = (e: any) => {
+    useEffect(() => {
+        if (cookies.get('correo')) {
+            navigate('/main')
+        }
+    }, []);
+
+    const [imput, setImput]: any = useState({})
+
+    const handleImputChange = (e: string | any) => {
         setImput({
             ...imput,
             [e.target.name]: e.target.value
@@ -24,21 +29,20 @@ export const FormLogin = () => {
     }
 
     const iniciarSesion = async () => {
+
         try {
             const { data } = await axios.post('https://aulavirtual-apis.herokuapp.com/paths/auth', imput)
-            setAuth(data)
-            if (auth) {
-                
-                cookies.set('id', data.id, { path: '/' })
-                cookies.set('nombres', data.nombres, { path: '/' })
-                cookies.set('correo', data.correo, { path: '/' })
-                cookies.set('rol', data.rol, { path: '/' })
 
-                Swal.fire('Inicio de secion', 'Bienvenido', 'error')
-            }
+            cookies.set('id', data.id, { path: '/' })
+            cookies.set('nombres', data.nombres, { path: '/' })
+            cookies.set('correo', data.correo, { path: '/' })
+            cookies.set('rol', data.rol, { path: '/' })
+
+            navigate('/main')
         } catch (error) {
             Swal.fire('Inicio de secion', 'usuario o contraseña incorrecta', 'error')
         }
+
     }
 
     return (
