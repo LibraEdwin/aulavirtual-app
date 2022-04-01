@@ -1,0 +1,1 @@
+export const auth = 'http://localhost:8000/paths/auth'

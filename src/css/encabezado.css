@@ -1,0 +1,17 @@
+.myCustomHeight{
+    display: flex;
+    flex-flow: column;
+    height: 86vh;
+    margin: 20px;
+    padding: 10px;
+    background-color: white;
+  }
+  .divEncabezado{
+    display: flex;
+    height: 68.84px;
+  }
+  .divIE{
+    color: white;
+    margin: auto;
+    margin-left: 10px;
+  }

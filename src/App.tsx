@@ -1,16 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Auth } from './layouts/Auth';
-import { Main } from './pages/Main';
-import Alumno from './routers/Alumno';
+import { Main } from './routers/Main';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Auth />} />
-          <Route path="/main" element={<Main />} />
+          <Route path="/login" element={<Auth />} />
+          <Route path="/*" element={<Main />} />
         </Routes>
       </BrowserRouter>
     </>

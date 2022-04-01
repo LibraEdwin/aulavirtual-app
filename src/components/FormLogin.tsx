@@ -4,6 +4,7 @@ import { Button, Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
+import { auth } from '../apis/apis';
 
 import '../css/login.css'
 
@@ -11,11 +12,12 @@ const cookies = new Cookies()
 
 export const FormLogin = () => {
 
+
     const navigate = useNavigate()
 
     useEffect(() => {
         if (cookies.get('correo')) {
-            navigate('/main')
+            navigate('/')
         }
     }, []);
 
@@ -31,14 +33,15 @@ export const FormLogin = () => {
     const iniciarSesion = async () => {
 
         try {
-            const { data } = await axios.post('https://aulavirtual-apis.herokuapp.com/paths/auth', imput)
+
+            const { data } = await axios.post(auth, imput)
 
             cookies.set('id', data.id, { path: '/' })
             cookies.set('nombres', data.nombres, { path: '/' })
             cookies.set('correo', data.correo, { path: '/' })
             cookies.set('rol', data.rol, { path: '/' })
 
-            navigate('/main')
+            navigate('/')
         } catch (error) {
             Swal.fire('Inicio de secion', 'usuario o contraseña incorrecta', 'error')
         }
