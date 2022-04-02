@@ -27,8 +27,8 @@ export const Header = () => {
                         </div>
                     </div>
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="offcanvasNavbar" >
-                    <Button variant="outline-light">
+                <Navbar.Toggle >
+                    <Button variant="outline-light" aria-controls="offcanvasNavbar">
                         <FontAwesomeIcon icon={faBars} />
                     </Button>
                 </Navbar.Toggle>

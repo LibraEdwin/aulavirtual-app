@@ -7,7 +7,7 @@ function AlumnoRouters() {
   return (
     <Routes>
       <Route path="/" element={<AlumnoHome />} />
-      <Route path="/evento" element={<AlunmoEvento />} />
+      <Route path="/evento/*" element={<AlunmoEvento />} />
     </Routes>
   )
 }

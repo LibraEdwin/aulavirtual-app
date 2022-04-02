@@ -1,7 +1,8 @@
 import React from 'react'
+import { Container } from 'react-bootstrap';
 
 export const AdminHome = () => {
   return (
-    <div>AdminHome</div>
+    <Container>AdminHome</Container>
   )
 }
