@@ -4,7 +4,7 @@ import { Button, Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
-import { auth } from '../apis/apis';
+import { auth } from '../apis/Apis';
 
 import '../css/login.css'
 

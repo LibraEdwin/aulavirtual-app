@@ -6,7 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { messages } from '../../helpers/calendar-messages-es'
 import { CalendarActividadEvento } from './CalendarActividadEvento';
 import { useDatos } from '../../hooks/useDatos'
-import { ApiCalendatio } from '../../apis/alumno/alumnoApis';
+import { ApiCalendatio } from '../../apis/AlumnoApis'
 
 moment.locale('es')
 

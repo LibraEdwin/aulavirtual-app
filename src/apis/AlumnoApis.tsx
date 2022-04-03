@@ -3,4 +3,4 @@ const cookies = new Cookies()
 
 const id = cookies.get('id')
 
-export const ApiCalendatio = `https://aulavirtual-apis.herokuapp.com/alumno/${id}`
+export const ApiCalendatio = `http://localhost:8000/alumno/${id}`
