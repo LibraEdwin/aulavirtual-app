@@ -1,4 +1,3 @@
-import React from 'react'
 import { ListGroup, Offcanvas } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import { CerrarSecion } from '../CerrarSecion'

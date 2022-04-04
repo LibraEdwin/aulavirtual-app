@@ -1,4 +1,3 @@
-import React from 'react'
 import { ListGroup, Offcanvas } from 'react-bootstrap'
 
 export const OffcanvasBodyDocente = () => {

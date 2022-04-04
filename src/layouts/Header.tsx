@@ -1,6 +1,5 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import { Button, Container, Figure, Navbar, Offcanvas } from 'react-bootstrap'
 import { MainHearder } from '../components/MainHearder'
 import '../css/encabezado.css'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import { AdminHome } from '../pages/admin/AdminHome';
 import { AsignacionAlumnos } from '../pages/admin/AsignacionAlumnos';

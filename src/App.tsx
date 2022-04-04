@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Auth } from './layouts/Auth';
 import { Main } from './routers/Main';

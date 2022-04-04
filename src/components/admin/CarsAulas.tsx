@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card, Button, Row, Col } from 'react-bootstrap';
 import { ApiAula } from '../../apis/AdminApis';
 import { useDatos } from '../../hooks/useDatos';
