@@ -1,8 +1,9 @@
 import { useDatos } from '../../hooks/useDatos'
 import { Button, Form, FormControl, Modal, Table } from 'react-bootstrap';
-import { ApiGetUsuario, ApiPostUsuarioAlumnos, ApiPutUsuarioAlumnos } from '../../apis/AdminApis';
-import { useState, useEffect } from 'react';
+import { ApiDeleteUsuarioAlumnos, ApiGetUsuario, ApiPostUsuarioAlumnos, ApiPutUsuarioAlumnos } from '../../apis/AdminApis';
+import { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export const TableUsuariosAlumnos = () => {
 
@@ -14,7 +15,17 @@ export const TableUsuariosAlumnos = () => {
 
     const [operador, setOperador] = useState('')
 
-    const seleccionarPais = (element: any, caso = '') => {
+    const aviso = () => {
+        return Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Operacion exitosa',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
+    const seleccionarPais = (element: {} | any, caso = '') => {
         setUsuarioAlumnoSeleccionado(element)
         switch (caso) {
             case 'Editar':
@@ -25,10 +36,28 @@ export const TableUsuariosAlumnos = () => {
                 setOperador('Agregar')
                 setShow(true)
                 break;
+            case 'Eliminar':
+                setOperador('Eliminar')
+                AvisoEliminar()
+                break;
             default:
-                setShow(false)
                 break;
         }
+    }
+
+    const AvisoEliminar = () => {
+        Swal.fire({
+            title: 'Eliminar Alumno',
+            text: `Esta seguro de desactivar al alumno ${usuarioAlumnoSeleccionado.apellidos} ${usuarioAlumnoSeleccionado.nombres}!`,
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                aviso()
+                Boton('Eliminar')
+            }
+        })
     }
 
     const NuevaData = {
@@ -51,12 +80,15 @@ export const TableUsuariosAlumnos = () => {
             case 'Editar':
                 await axios.put(ApiPutUsuarioAlumnos + usuarioAlumnoSeleccionado.idusuarios, NuevaData)
                 setShow(false)
-                setUsuarioAlumnoSeleccionado({})
+                aviso()
                 break;
             case 'Agregar':
                 await axios.post(ApiPostUsuarioAlumnos, usuarioAlumnoSeleccionado)
                 setShow(false)
-                setUsuarioAlumnoSeleccionado({})
+                aviso()
+                break;
+            case 'Eliminar':
+                await axios.delete(ApiDeleteUsuarioAlumnos + usuarioAlumnoSeleccionado)
                 break;
             default:
                 break;
@@ -76,7 +108,7 @@ export const TableUsuariosAlumnos = () => {
                     <Button variant="outline-success">Buscar</Button>
                 </Form>
                 <>
-                    <Button variant="outline-primary" onClick={() => { seleccionarPais(usuarioAlumnoSeleccionado, 'Agregar') }}>Agregar</Button>
+                    <Button variant="outline-primary" onClick={() => { seleccionarPais({}, 'Agregar') }}>Agregar</Button>
                 </>
             </div>
             <Table striped bordered hover>
@@ -96,7 +128,7 @@ export const TableUsuariosAlumnos = () => {
                             <td>{element.Usuario.img}</td>
                             <td>
                                 <Button variant="outline-warning" onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}>Editar</Button>{' '}
-                                <Button variant="outline-danger">Eliminar</Button>
+                                <Button variant="outline-danger" onClick={() => { seleccionarPais(element.Usuario, 'Eliminar') }}>Eliminar</Button>
                             </td>
                         </tr>
                     ))}
@@ -104,10 +136,7 @@ export const TableUsuariosAlumnos = () => {
             </Table>
             <Modal
                 show={show}
-                onHide={() => {
-                    setUsuarioAlumnoSeleccionado({})
-                    setShow(false)
-                }}
+                onHide={() => { setShow(false) }}
                 centered>
                 <Modal.Header>
                     <Modal.Title>{operador}</Modal.Title>
