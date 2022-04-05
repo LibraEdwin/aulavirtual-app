@@ -1,10 +1,16 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
 import { Button, Container, Figure, Navbar, Offcanvas } from 'react-bootstrap'
 import { MainHearder } from '../components/MainHearder'
 import '../css/encabezado.css'
 
 export const Header = () => {
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <Navbar bg="black" expand={false}>
@@ -26,20 +32,15 @@ export const Header = () => {
                         </div>
                     </div>
                 </Navbar.Brand>
-                <Navbar.Toggle >
-                    <Button variant="outline-light" aria-controls="offcanvasNavbar">
-                        <FontAwesomeIcon icon={faBars} />
-                    </Button>
-                </Navbar.Toggle>
-                <Navbar.Offcanvas
-                    id="offcanvasNavbar"
-                    aria-labelledby="offcanvasNavbarLabel"
-                    placement="end">
-                    <Offcanvas.Header>
-                        <Offcanvas.Title id="offcanvasNavbarLabel">MENU</Offcanvas.Title>
+                <Button variant="outline-light" aria-controls="offcanvasNavbar" onClick={handleShow}>
+                    <FontAwesomeIcon icon={faBars} />
+                </Button>
+                <Offcanvas show={show} onHide={handleClose} placement="end">
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title>Menu</Offcanvas.Title>
                     </Offcanvas.Header>
                     <MainHearder />
-                </Navbar.Offcanvas>
+                </Offcanvas>
             </Container>
         </Navbar>
     )

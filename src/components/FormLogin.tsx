@@ -16,7 +16,12 @@ export const FormLogin = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (cookies.get('correo')) {
+        if (
+            cookies.get('id') &&
+            cookies.get('nombres') &&
+            cookies.get('correo') &&
+            cookies.get('rol')
+        ) {
             navigate('/')
         }
     }, []);

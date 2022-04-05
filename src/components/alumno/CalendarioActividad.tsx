@@ -5,7 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { messages } from '../../helpers/calendar-messages-es'
 import { CalendarActividadEvento } from './CalendarActividadEvento';
 import { useDatos } from '../../hooks/useDatos'
-import { ApiCalendatio } from '../../apis/AlumnoApis'
+import { ApiGetCalendatio } from '../../apis/AlumnoApis'
 
 moment.locale('es')
 
@@ -13,7 +13,7 @@ const localizer = momentLocalizer(moment)
 
 export const CalendarioActividad = () => {
 
-    const { state } = useDatos(ApiCalendatio)
+    const { state } = useDatos(ApiGetCalendatio)
 
     return (
         <div className="myCustomHeight">

@@ -1,8 +1,5 @@
-import Cookies from 'universal-cookie'
-const cookies = new Cookies()
+export const ApiGetUsuario = 'http://localhost:8000/admin/usuariosAlumno'
+export const ApiPutUsuarioAlumnos = `http://localhost:8000/admin/usuariosAlumno/`
+export const ApiPostUsuarioAlumnos = `http://localhost:8000/admin/usuariosAlumno`
 
-const id = cookies.get('id')
-
-export const ApiUsuario = `http://localhost:8000/admin/usuarios`
-
-export const ApiAula = 'http://localhost:8000/admin/Aula'
+export const ApiGetAula = 'http://localhost:8000/admin/Aula'
