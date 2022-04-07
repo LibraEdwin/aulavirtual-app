@@ -6,10 +6,11 @@ export const useDatos = (url: any) => {
     const [state, setState] = useState([])
 
     useEffect(() => {
-
-        axios.get(url)
-            .then((res) => { setState(res.data) })
-
+        const getUser = async () => {
+            const { data } = await axios.get(url);
+            setState(data)
+        }
+        getUser()
     }, [state])
 
     return {

@@ -1,9 +1,11 @@
 import { useDatos } from '../../hooks/useDatos'
-import { Button, Form, FormControl, Modal, Table } from 'react-bootstrap';
-import { ApiDeleteUsuarioAlumnos, ApiGetUsuario, ApiPostUsuarioAlumnos, ApiPutUsuarioAlumnos } from '../../apis/AdminApis';
+import { Button, Form, FormControl, Table } from 'react-bootstrap';
+import { ApiGetUsuario } from '../../apis/AdminApis';
 import { useState } from 'react';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import { EliminarUsuarioAlumno } from './CRUD_usuarioAlumno/EliminarUsuarioAlumno';
+import { AsignarAulaUsuarioAlumno } from './CRUD_usuarioAlumno/AsignarAulaUsuarioAlumno';
+import { AgregarUsuarioAlumno } from './CRUD_usuarioAlumno/AgregarUsuarioAlumno';
+import { EditarUsuarioAlumno } from './CRUD_usuarioAlumno/EditarUsuarioAlumno';
 
 export const TableUsuariosAlumnos = () => {
 
@@ -13,86 +15,9 @@ export const TableUsuariosAlumnos = () => {
 
     const [usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado]: any = useState({})
 
-    const [operador, setOperador] = useState('')
-
-    const aviso = () => {
-        return Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Operacion exitosa',
-            showConfirmButton: false,
-            timer: 1500
-        })
-    }
-
-    const seleccionarPais = (element: {} | any, caso = '') => {
+    const seleccionarPais = (element: {} | any) => {
         setUsuarioAlumnoSeleccionado(element)
-        switch (caso) {
-            case 'Editar':
-                setOperador('Editar')
-                setShow(true)
-                break;
-            case 'Agregar':
-                setOperador('Agregar')
-                setShow(true)
-                break;
-            case 'Eliminar':
-                setOperador('Eliminar')
-                AvisoEliminar()
-                break;
-            default:
-                break;
-        }
-    }
-
-    const AvisoEliminar = () => {
-        Swal.fire({
-            title: 'Eliminar Alumno',
-            text: `Esta seguro de desactivar al alumno ${usuarioAlumnoSeleccionado.apellidos} ${usuarioAlumnoSeleccionado.nombres}!`,
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Si'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                aviso()
-                Boton('Eliminar')
-            }
-        })
-    }
-
-    const NuevaData = {
-        nombres: usuarioAlumnoSeleccionado.nombres,
-        apellidos: usuarioAlumnoSeleccionado.apellidos,
-        correo: usuarioAlumnoSeleccionado.correo,
-        contraseña: usuarioAlumnoSeleccionado.contraseña,
-        img: usuarioAlumnoSeleccionado.img
-    }
-
-    const handleImputChange = (e: string | any) => {
-        setUsuarioAlumnoSeleccionado({
-            ...usuarioAlumnoSeleccionado,
-            [e.target.name]: e.target.value
-        });
-    }
-
-    const Boton = async (caso: any) => {
-        switch (caso) {
-            case 'Editar':
-                await axios.put(ApiPutUsuarioAlumnos + usuarioAlumnoSeleccionado.idusuarios, NuevaData)
-                setShow(false)
-                aviso()
-                break;
-            case 'Agregar':
-                await axios.post(ApiPostUsuarioAlumnos, usuarioAlumnoSeleccionado)
-                setShow(false)
-                aviso()
-                break;
-            case 'Eliminar':
-                await axios.delete(ApiDeleteUsuarioAlumnos + usuarioAlumnoSeleccionado)
-                break;
-            default:
-                break;
-        }
+        setShow(true)
     }
 
     return (
@@ -107,9 +32,7 @@ export const TableUsuariosAlumnos = () => {
                     />
                     <Button variant="outline-success">Buscar</Button>
                 </Form>
-                <>
-                    <Button variant="outline-primary" onClick={() => { seleccionarPais({}, 'Agregar') }}>Agregar</Button>
-                </>
+                <Button variant="outline-primary" onClick={() => { setShow(true) }}>Agregar</Button>
             </div>
             <Table striped bordered hover>
                 <thead>
@@ -127,69 +50,24 @@ export const TableUsuariosAlumnos = () => {
                             <td>{element.Usuario.correo}</td>
                             <td>{element.Usuario.img}</td>
                             <td>
-                                <Button variant="outline-warning" onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}>Editar</Button>{' '}
-                                <Button variant="outline-danger" onClick={() => { seleccionarPais(element.Usuario, 'Eliminar') }}>Eliminar</Button>
+                                <Button variant="outline-warning" onClick={() => { seleccionarPais(element.Usuario) }}>Editar</Button>{' '}
+                                <Button variant="outline-danger" onClick={() => { EliminarUsuarioAlumno(element.Usuario) }}>Eliminar</Button>{' '}
+                                <Button variant="outline-success" onClick={() => { AsignarAulaUsuarioAlumno(element) }}>Asignar Aula</Button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-            <Modal
+            <EditarUsuarioAlumno
                 show={show}
-                onHide={() => { setShow(false) }}
-                centered>
-                <Modal.Header>
-                    <Modal.Title>{operador}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group className="mb-3">
-                            <Form.Control
-                                type="text"
-                                placeholder="Nombres"
-                                name="nombres"
-                                onChange={handleImputChange}
-                                value={usuarioAlumnoSeleccionado && usuarioAlumnoSeleccionado.nombres} />
-
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Control
-                                type="text"
-                                placeholder="Apellidos"
-                                name="apellidos"
-                                onChange={handleImputChange}
-                                value={usuarioAlumnoSeleccionado && usuarioAlumnoSeleccionado.apellidos} />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Control
-                                type="Email"
-                                placeholder="Correo"
-                                name="correo"
-                                onChange={handleImputChange}
-                                value={usuarioAlumnoSeleccionado && usuarioAlumnoSeleccionado.correo} />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Control
-                                type="file"
-                                name="img"
-                                onChange={handleImputChange}
-                                disabled />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Control
-                                type="password"
-                                placeholder="Contraseña"
-                                name="contraseña"
-                                onChange={handleImputChange} />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => { Boton(operador) }}>
-                        Guardar
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                setShow={setShow}
+                usuarioAlumnoSeleccionado={usuarioAlumnoSeleccionado}
+                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado} />
+            <AgregarUsuarioAlumno
+                show={show}
+                setShow={setShow}
+                usuarioAlumnoSeleccionado={usuarioAlumnoSeleccionado}
+                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado} />
         </>
     )
 }
