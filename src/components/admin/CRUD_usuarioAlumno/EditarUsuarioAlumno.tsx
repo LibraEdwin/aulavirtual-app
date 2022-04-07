@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ApiPutUsuarioAlumnos } from '../../../apis/AdminApis';
 import { aviso } from '../../Aviso';
 
-export const EditarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado }: any) => {
+export const EditarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado, getUser }: any) => {
 
   const handleImputChange = (e: string | any) => {
     setUsuarioAlumnoSeleccionado({
@@ -25,6 +25,7 @@ export const EditarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado, 
     await axios.put(ApiPutUsuarioAlumnos + usuarioAlumnoSeleccionado.idusuarios, NuevaData)
     setShow(false)
     aviso()
+    getUser()
   }
 
   return (

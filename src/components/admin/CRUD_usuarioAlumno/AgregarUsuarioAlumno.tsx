@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap'
 import { ApiPostUsuarioAlumnos } from '../../../apis/AdminApis';
 import { aviso } from '../../Aviso';
 
-export const AgregarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado }: any) => {
+export const AgregarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado, getUser }: any) => {
 
   const handleImputChange = (e: string | any) => {
     setUsuarioAlumnoSeleccionado({
@@ -16,6 +16,7 @@ export const AgregarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado,
     await axios.post(ApiPostUsuarioAlumnos, usuarioAlumnoSeleccionado)
     setShow(false)
     aviso()
+    getUser()
   }
 
   return (

@@ -1,5 +1,4 @@
-import { useDatos } from '../../hooks/useDatos'
-import { Button, Form, FormControl, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { ApiGetUsuario } from '../../apis/AdminApis';
 import { useEffect, useState } from 'react';
 import { EliminarUsuarioAlumno } from './CRUD_usuarioAlumno/EliminarUsuarioAlumno';
@@ -7,16 +6,31 @@ import { AsignarAulaUsuarioAlumno } from './CRUD_usuarioAlumno/AsignarAulaUsuari
 import { AgregarUsuarioAlumno } from './CRUD_usuarioAlumno/AgregarUsuarioAlumno';
 import { EditarUsuarioAlumno } from './CRUD_usuarioAlumno/EditarUsuarioAlumno';
 import '../../css/flex.css'
+import { BusquedaUsuarioAlumno } from './CRUD_usuarioAlumno/BusquedaUsuarioAlumno';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSchool, faUserEdit, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export const TableUsuariosAlumnos = () => {
 
-    const { state } = useDatos(ApiGetUsuario)
+    const [usuarios, setUsuarios]: any = useState([])
+    const [tablaUsuario, setTablaUsuario]: any = useState([])
+    const [busqueda, setBusqueda] = useState('')
 
     const [showAgregar, setShowAgregar] = useState(false);
     const [showEditar, setShowEditar] = useState(false);
 
     const [usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado] = useState({})
+
+    const getUser = async () => {
+        const { data } = await axios.get(ApiGetUsuario);
+        setTablaUsuario(data)
+        setUsuarios(data)
+    }
+
+    useEffect(() => {
+        getUser()
+    }, [])
 
     const seleccionarPais = (element: {}, caso: string) => {
         switch (caso) {
@@ -31,55 +45,22 @@ export const TableUsuariosAlumnos = () => {
         }
     }
 
-    const [usuarios, setUsuarios]: any = useState([])
-    const [tablaUsuario, setTablaUsuario]: any = useState([])
-    const [busqueda, setBusqueda] = useState('')
-
-    useEffect(() => {
-        const getUser = async () => {
-            const { data } = await axios.get(ApiGetUsuario);
-            setTablaUsuario(data)
-            setUsuarios(data)
-        }
-        getUser()
-    }, [busqueda])
-
-    const handleChange = (e: any) => {
-        setBusqueda(e.target.value)
-        filtrar(e.target.value)
-    }
-
-    const filtrar = (terminoBusqueda: any) => {
-        let resultadoBusqueda = tablaUsuario.filter((elemento: any) => {
-            if (elemento.Usuario.nombres.includes(terminoBusqueda.toLowerCase())) {
-                return elemento
-            }
-        })
-        setUsuarios(resultadoBusqueda)
-    }
-
     return (
         <>
             <div className='filtro'>
-                <Form className="d-flex">
-                    <FormControl
-                        type="search"
-                        placeholder="Buscar"
-                        className="me-2"
-                        aria-label="Search"
-                        value={busqueda}
-                        onChange={handleChange}
-                    />
-                    <Button variant="outline-success">Buscar</Button>
-                </Form>
-                <Button variant="outline-primary" onClick={() => { seleccionarPais({}, 'Agregar') }}>Agregar</Button>
+                <div className='filtro'>
+                    <BusquedaUsuarioAlumno
+                        setUsuarios={setUsuarios}
+                        tablaUsuario={tablaUsuario}
+                        busqueda={busqueda}
+                        setBusqueda={setBusqueda} />
+                </div>
+                <Button variant="primary" onClick={() => { seleccionarPais({}, 'Agregar') }}><FontAwesomeIcon icon={faUserPlus} />{' '}Agregar</Button>
             </div>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>id</th>
                         <th>Apellidos</th>
-                        <th>nombres</th>
                         <th>Correo</th>
                         <th>img</th>
                         <th>Control</th>
@@ -88,15 +69,13 @@ export const TableUsuariosAlumnos = () => {
                 <tbody>
                     {usuarios.map((element: any, i: any) => (
                         <tr key={i++}>
-                            <td>{element.idalumnos}</td>
-                            <td>{element.Usuario.apellidos}</td>
-                            <td>{element.Usuario.nombres}</td>
+                            <td>{element.Usuario.apellidos + ' '+element.Usuario.nombres}</td>
                             <td>{element.Usuario.correo}</td>
                             <td>{element.Usuario.img}</td>
                             <td>
-                                <Button variant="outline-warning" onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}>Editar</Button>{' '}
-                                <Button variant="outline-danger" onClick={() => { EliminarUsuarioAlumno(element.Usuario) }}>Eliminar</Button>{' '}
-                                <Button variant="outline-success" onClick={() => { AsignarAulaUsuarioAlumno(element) }}>Asignar Aula</Button>
+                                <Button variant="warning" onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}><FontAwesomeIcon icon={faUserEdit} />{' '}Editar</Button>{' '}
+                                <Button variant="danger" onClick={() => { EliminarUsuarioAlumno(element.Usuario, getUser) }}><FontAwesomeIcon icon={faUserMinus} />{' '}Desactivar</Button>{' '}
+                                <Button variant="success" onClick={() => { AsignarAulaUsuarioAlumno(element, getUser) }}><FontAwesomeIcon icon={faSchool} />{' '}Asignar</Button>
                             </td>
                         </tr>
                     ))}
@@ -106,12 +85,14 @@ export const TableUsuariosAlumnos = () => {
                 show={showEditar}
                 setShow={setShowEditar}
                 usuarioAlumnoSeleccionado={usuarioAlumnoSeleccionado}
-                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado} />
+                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado}
+                getUser={getUser} />
             <AgregarUsuarioAlumno
                 show={showAgregar}
                 setShow={setShowAgregar}
                 usuarioAlumnoSeleccionado={usuarioAlumnoSeleccionado}
-                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado} />
+                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado}
+                getUser={getUser} />
         </>
     )
 }

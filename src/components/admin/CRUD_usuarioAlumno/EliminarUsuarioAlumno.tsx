@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ApiDeleteUsuarioAlumnos } from '../../../apis/AdminApis';
 import { aviso } from '../../Aviso';
 
-export const EliminarUsuarioAlumno = (usuario: any) => {
+export const EliminarUsuarioAlumno = (usuario: any, getUser: any) => {
 
     const AvisoEliminar = () => {
         Swal.fire({
@@ -12,10 +12,11 @@ export const EliminarUsuarioAlumno = (usuario: any) => {
             icon: 'error',
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Si'
-        }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 await axios.delete(ApiDeleteUsuarioAlumnos + usuario.idusuarios)
                 aviso()
+                getUser()
             }
         })
     }

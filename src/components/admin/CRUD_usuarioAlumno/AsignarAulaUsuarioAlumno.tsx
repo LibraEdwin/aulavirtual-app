@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ApiAsignarUsuarioAlumnos, ApiGetAula } from '../../../apis/AdminApis';
 import { aviso } from '../../Aviso';
 
-export const AsignarAulaUsuarioAlumno = (usuario: any) => {
+export const AsignarAulaUsuarioAlumno = (usuario: any, getUser: any) => {
 
     const AvisoAsignar = async () => {
         const { data } = await axios.get(ApiGetAula)
@@ -17,6 +17,7 @@ export const AsignarAulaUsuarioAlumno = (usuario: any) => {
                 return new Promise(async (resolve) => {
                     await axios.put(ApiAsignarUsuarioAlumnos + usuario.idalumnos, { aulas_idaulas: data[value].idaulas })
                     aviso()
+                    getUser()
                 })
             }
         })
