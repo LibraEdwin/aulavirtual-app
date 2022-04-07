@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import { ApiDeleteUsuarioAlumnos } from '../../../apis/AdminApis';
-import { aviso } from './Aviso';
+import { aviso } from '../../Aviso';
 
 export const EliminarUsuarioAlumno = (usuario: any) => {
 

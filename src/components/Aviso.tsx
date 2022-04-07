@@ -5,7 +5,7 @@ export const aviso = () => {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2500,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -14,6 +14,6 @@ export const aviso = () => {
     })
     Toast.fire({
         icon: 'success',
-        title: 'Signed in successfully'
+        title: 'Operacion exitosa'
     })
 }

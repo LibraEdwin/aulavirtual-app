@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Button, Form, Modal } from 'react-bootstrap'
 import { ApiPostUsuarioAlumnos } from '../../../apis/AdminApis';
-import { aviso } from './Aviso';
+import { aviso } from '../../Aviso';
 
 export const AgregarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado }: any) => {
 
@@ -33,7 +33,7 @@ export const AgregarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado,
               type="text"
               placeholder="Nombres"
               name="nombres"
-              onChange={handleImputChange}/>
+              onChange={handleImputChange} />
 
           </Form.Group>
           <Form.Group className="mb-3">
@@ -41,14 +41,14 @@ export const AgregarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado,
               type="text"
               placeholder="Apellidos"
               name="apellidos"
-              onChange={handleImputChange}/>
+              onChange={handleImputChange} />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Control
               type="Email"
               placeholder="Correo"
               name="correo"
-              onChange={handleImputChange}/>
+              onChange={handleImputChange} />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Control

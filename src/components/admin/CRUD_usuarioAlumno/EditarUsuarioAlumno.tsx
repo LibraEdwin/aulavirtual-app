@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import axios from 'axios';
 import { ApiPutUsuarioAlumnos } from '../../../apis/AdminApis';
-import { aviso } from './Aviso';
+import { aviso } from '../../Aviso';
 
 export const EditarUsuarioAlumno = ({ show, setShow, usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado }: any) => {
 
