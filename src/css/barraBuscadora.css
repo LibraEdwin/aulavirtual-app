@@ -1,3 +1,21 @@
+.grupoBarra{
+    width: 100%;
+    padding: 10px;
+    margin: auto;
+}
+
 .barra{
-    width: 50%;
+    margin: auto;
+    margin-left: 0;
+    width: 75%;
+}
+
+.buscador{
+    width: 85%;
+    margin: auto;
+}
+
+.BotonAgregar{
+    margin: auto;
+    margin-right: 0;
 }

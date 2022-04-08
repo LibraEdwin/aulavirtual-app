@@ -1,29 +1,29 @@
-import { Button, Table } from 'react-bootstrap';
-import { ApiGetUsuario } from '../../apis/AdminApis';
+import { Button, Table, Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { EliminarUsuarioAlumno } from './CRUD_usuarioAlumno/EliminarUsuarioAlumno';
 import { AsignarAulaUsuarioAlumno } from './CRUD_usuarioAlumno/AsignarAulaUsuarioAlumno';
 import { AgregarUsuarioAlumno } from './CRUD_usuarioAlumno/AgregarUsuarioAlumno';
 import { EditarUsuarioAlumno } from './CRUD_usuarioAlumno/EditarUsuarioAlumno';
-import '../../css/flex.css'
+import '../../css/componentes.css'
 import { BusquedaUsuarioAlumno } from './CRUD_usuarioAlumno/BusquedaUsuarioAlumno';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSchool, faUserEdit, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faSchool, faUser, faUserCheck, faUserEdit, faUserMinus, faUserPlus, faUserSlash, faUserTimes } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
+import { ApiGetUsuariosAlumnoDesactivados } from '../../apis/AdminApis';
+import { UsuarioAlumnoActivar } from './CRUD_usuarioAlumno/putUsuarioAlumno';
 
-export const TableUsuariosAlumnos = () => {
+export const TablaUsuarioAlumnosDesactivados = () => {
 
     const [usuarios, setUsuarios]: any = useState([])
     const [tablaUsuario, setTablaUsuario]: any = useState([])
     const [busqueda, setBusqueda] = useState('')
 
-    const [showAgregar, setShowAgregar] = useState(false);
     const [showEditar, setShowEditar] = useState(false);
 
     const [usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado] = useState({})
 
     const getUser = async () => {
-        const { data } = await axios.get(ApiGetUsuario);
+        const { data } = await axios.get(ApiGetUsuariosAlumnoDesactivados);
         setTablaUsuario(data)
         setUsuarios(data)
     }
@@ -38,26 +38,30 @@ export const TableUsuariosAlumnos = () => {
                 setUsuarioAlumnoSeleccionado(element)
                 setShowEditar(true)
                 break;
-            case 'Agregar':
-                setUsuarioAlumnoSeleccionado(element)
-                setShowAgregar(true)
-                break;
         }
     }
 
     return (
-        <>
-            <div className='filtro'>
-                <div className='filtro'>
+        <Container>
+            <div className='filtro grupoBarra'>
+                <div className='filtro barra'>
                     <BusquedaUsuarioAlumno
                         setUsuarios={setUsuarios}
                         tablaUsuario={tablaUsuario}
                         busqueda={busqueda}
                         setBusqueda={setBusqueda} />
                 </div>
-                <Button variant="primary" onClick={() => { seleccionarPais({}, 'Agregar') }}><FontAwesomeIcon icon={faUserPlus} />{' '}Agregar</Button>
+                <div className='BotonAgregar'>
+                    <NavLink to='/registroUsuariosAlumnos'>
+                        <Button
+                            className='boton'
+                            variant="dark">
+                            <FontAwesomeIcon icon={faUser} />{' '}Alumnos
+                        </Button>
+                    </NavLink>
+                </div>
             </div>
-            <Table striped bordered hover>
+            <Table striped bordered hover className='tabla'>
                 <thead>
                     <tr>
                         <th>Apellidos</th>
@@ -69,13 +73,28 @@ export const TableUsuariosAlumnos = () => {
                 <tbody>
                     {usuarios.map((element: any, i: any) => (
                         <tr key={i++}>
-                            <td>{element.Usuario.apellidos + ' '+element.Usuario.nombres}</td>
+                            <td>{element.Usuario.apellidos + ' ' + element.Usuario.nombres}</td>
                             <td>{element.Usuario.correo}</td>
                             <td>{element.Usuario.img}</td>
                             <td>
-                                <Button variant="warning" onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}><FontAwesomeIcon icon={faUserEdit} />{' '}Editar</Button>{' '}
-                                <Button variant="danger" onClick={() => { EliminarUsuarioAlumno(element.Usuario, getUser) }}><FontAwesomeIcon icon={faUserMinus} />{' '}Desactivar</Button>{' '}
-                                <Button variant="success" onClick={() => { AsignarAulaUsuarioAlumno(element, getUser) }}><FontAwesomeIcon icon={faSchool} />{' '}Asignar</Button>
+                                <Button
+                                    className='boton'
+                                    variant="info"
+                                    onClick={() => { UsuarioAlumnoActivar(element.Usuario, getUser) }}>
+                                    <FontAwesomeIcon icon={faUserCheck} />{' '}Activar
+                                </Button>
+                                <Button
+                                    className='boton'
+                                    variant="warning"
+                                    onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}>
+                                    <FontAwesomeIcon icon={faUserEdit} />{' '}Editar
+                                </Button>
+                                <Button
+                                    className='boton'
+                                    variant="danger"
+                                    onClick={() => { UsuarioAlumnoActivar(element.Usuario, getUser) }}>
+                                    <FontAwesomeIcon icon={faUserTimes} />{' '}Eliminar
+                                </Button>
                             </td>
                         </tr>
                     ))}
@@ -87,12 +106,6 @@ export const TableUsuariosAlumnos = () => {
                 usuarioAlumnoSeleccionado={usuarioAlumnoSeleccionado}
                 setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado}
                 getUser={getUser} />
-            <AgregarUsuarioAlumno
-                show={showAgregar}
-                setShow={setShowAgregar}
-                usuarioAlumnoSeleccionado={usuarioAlumnoSeleccionado}
-                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado}
-                getUser={getUser} />
-        </>
+        </Container>
     )
 }

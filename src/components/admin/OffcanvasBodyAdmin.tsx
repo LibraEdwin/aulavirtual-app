@@ -12,13 +12,28 @@ export const OffcanvasBodyAdmin = () => {
                     </NavLink>
                 </ListGroup.Item>
                 <ListGroup.Item action>
-                    <NavLink to='/registroAlumno'>
+                    <NavLink to='/registroUsuariosAlumnos'>
                         Registro de alumnos
                     </NavLink>
                 </ListGroup.Item>
                 <ListGroup.Item action>
+                    <NavLink to='/registroUsuariosAlumnos'>
+                        Registro de docentes
+                    </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item action>
                     <NavLink to='/asignacionAula'>
-                        Asignacion de alumnos
+                        Aulas
+                    </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item action>
+                    <NavLink to='/asignacionAula'>
+                        Cursos
+                    </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item action>
+                    <NavLink to='/asignacionAula'>
+                        Notas
                     </NavLink>
                 </ListGroup.Item>
                 <CerrarSecion />

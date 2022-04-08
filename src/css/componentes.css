@@ -1,0 +1,11 @@
+.filtro{
+    display: flex;
+}
+
+.tabla{
+    text-align: center;
+}
+
+.boton{
+    margin: 5px;
+}

@@ -1,6 +1,6 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Form, FormControl } from 'react-bootstrap'
+import { Button, FormControl } from 'react-bootstrap'
 import '../../../css/barraBuscadora.css'
 
 export const BusquedaUsuarioAlumno = ({ setUsuarios, tablaUsuario, busqueda, setBusqueda }: any) => {
@@ -20,16 +20,23 @@ export const BusquedaUsuarioAlumno = ({ setUsuarios, tablaUsuario, busqueda, set
     }
     return (
         <>
-            <Form className="d-flex barra">
+            <div className='buscador'>
                 <FormControl
                     type="search"
-                    placeholder="Buscar"
                     className="me-2"
                     aria-label="Search"
                     value={busqueda}
                     onChange={handleChange} />
-            </Form>
-            <Button variant="dark" onClick={() => { filtrar(busqueda) }}><FontAwesomeIcon icon={faSearch} />{' '}Buscar</Button>
+
+            </div>
+            <div className="botonBuscar">
+                <Button
+                    className='boton'
+                    variant="secondary"
+                    onClick={() => { filtrar(busqueda) }}>
+                    <FontAwesomeIcon icon={faSearch} />{' '}Buscar
+                </Button>
+            </div>
         </>
     )
 }

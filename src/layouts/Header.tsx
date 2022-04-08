@@ -36,7 +36,7 @@ export const Header = () => {
                     <FontAwesomeIcon icon={faBars} />
                 </Button>
                 <Offcanvas show={show} onHide={handleClose} placement="end">
-                    <Offcanvas.Header closeButton>
+                    <Offcanvas.Header>
                         <Offcanvas.Title>Menu</Offcanvas.Title>
                     </Offcanvas.Header>
                     <MainHearder />
