@@ -67,7 +67,7 @@ export const TableUsuariosAlumnosActivados = () => {
                         <Button
                             className='boton'
                             variant="dark">
-                            <FontAwesomeIcon icon={faUserSlash} />{' '}Desavilitados
+                            <FontAwesomeIcon icon={faUserSlash} />{' '}Desabilitados
                         </Button>
                     </NavLink>
                 </div>
@@ -90,19 +90,19 @@ export const TableUsuariosAlumnosActivados = () => {
                             <td>
                                 <Button
                                     className='boton'
-                                    variant="warning"
-                                    onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}>
-                                    <FontAwesomeIcon icon={faUserEdit} />{' '}Editar
-                                </Button>
-                                <Button
-                                    className='boton'
                                     variant="success"
                                     onClick={() => { AsignarAulaUsuarioAlumno(element, getUser) }}>
                                     <FontAwesomeIcon icon={faSchool} />{' '}Asignar
                                 </Button>
                                 <Button
                                     className='boton'
-                                    variant="danger"
+                                    variant="warning"
+                                    onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}>
+                                    <FontAwesomeIcon icon={faUserEdit} />{' '}Editar
+                                </Button>
+                                <Button
+                                    className='boton'
+                                    variant="secondary"
                                     onClick={() => { UsuarioAlumnoDesactivar(element.Usuario, getUser) }}>
                                     <FontAwesomeIcon icon={faUserMinus} />{' '}Desavilitar
                                 </Button>

@@ -92,7 +92,7 @@ export const TablaUsuarioAlumnosDesactivados = () => {
                                 <Button
                                     className='boton'
                                     variant="danger"
-                                    onClick={() => { UsuarioAlumnoActivar(element.Usuario, getUser) }}>
+                                    onClick={() => { UsuarioAlumnoActivar(element, getUser) }}>
                                     <FontAwesomeIcon icon={faUserTimes} />{' '}Eliminar
                                 </Button>
                             </td>

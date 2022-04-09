@@ -5,6 +5,7 @@ export const ApiputUsuarioAlumnosDesactivar = `http://localhost:8000/admin/usuar
 
 export const ApiGetUsuariosAlumnoDesactivados = 'http://localhost:8000/admin/usuariosAlumnoDesactivados'
 export const ApiputUsuarioAlumnosActivar = `http://localhost:8000/admin/usuariosAlumnoActivar/`
+export const ApideleteUsuariosAlumnoDesactivados = `http://localhost:8000/admin/usuariosAlumnoDesactivado/`
 
 export const ApiAsignarUsuarioAlumnos = `http://localhost:8000/admin/asignarAula/`
 

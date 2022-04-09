@@ -32,7 +32,7 @@ export const BusquedaUsuarioAlumno = ({ setUsuarios, tablaUsuario, busqueda, set
             <div className="botonBuscar">
                 <Button
                     className='boton'
-                    variant="secondary"
+                    variant="light"
                     onClick={() => { filtrar(busqueda) }}>
                     <FontAwesomeIcon icon={faSearch} />{' '}Buscar
                 </Button>
