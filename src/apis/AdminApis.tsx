@@ -1,12 +1,20 @@
-export const ApiGetUsuarioAlumnosActivados = 'http://localhost:8000/admin/usuariosAlumnoActivados'
-export const ApiPutUsuarioAlumnos = `http://localhost:8000/admin/usuariosAlumno/`
-export const ApiPostUsuarioAlumnos = `http://localhost:8000/admin/usuariosAlumno`
-export const ApiputUsuarioAlumnosDesactivar = `http://localhost:8000/admin/usuariosAlumnoDesactivar/`
+const url = 'http://localhost:8000/admin/'
 
-export const ApiGetUsuariosAlumnoDesactivados = 'http://localhost:8000/admin/usuariosAlumnoDesactivados'
-export const ApiputUsuarioAlumnosActivar = `http://localhost:8000/admin/usuariosAlumnoActivar/`
-export const ApideleteUsuariosAlumnoDesactivados = `http://localhost:8000/admin/usuariosAlumnoDesactivado/`
+export const registroUsuarioAlumno = {
 
-export const ApiAsignarUsuarioAlumnos = `http://localhost:8000/admin/asignarAula/`
+    getAlumnosActivados: url + 'usuariosAlumnoActivados',
+    getAlumnosDesactivados: url + 'usuariosAlumnoDesactivados',
 
-export const ApiGetAula = 'http://localhost:8000/admin/Aula'
+    PostAlumnos: url + 'usuariosAlumno',
+
+    PutAlumnos: url + 'usuariosAlumno/',
+
+    putActivar: url + 'usuariosAlumnoActivar/',
+    putDesactivar: url + 'usuariosAlumnoDesactivar/',
+
+    deletAlumnos: url + 'usuariosAlumnoDesactivado/',
+
+    putAsignar: url + 'asignarAula/',
+    getAulas: url + 'Aula'
+
+}

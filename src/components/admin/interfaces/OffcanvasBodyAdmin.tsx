@@ -1,6 +1,6 @@
 import { ListGroup, Offcanvas } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import { CerrarSecion } from '../CerrarSecion'
+import { CerrarSecion } from '../../CerrarSecion'
 
 export const OffcanvasBodyAdmin = () => {
     return (

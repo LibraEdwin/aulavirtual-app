@@ -5,11 +5,12 @@ export const useDatos = (url: any) => {
 
     const [state, setState] = useState([])
 
+    const getUser = async () => {
+        const { data } = await axios.get(url);
+        setState(data)
+    }
+
     useEffect(() => {
-        const getUser = async () => {
-            const { data } = await axios.get(url);
-            setState(data)
-        }
         getUser()
     }, [state])
 

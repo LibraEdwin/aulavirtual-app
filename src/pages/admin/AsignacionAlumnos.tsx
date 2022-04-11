@@ -1,5 +1,5 @@
 import { Container } from 'react-bootstrap';
-import { CarsAulas } from '../../components/admin/CarsAulas';
+import { CarsAulas } from '../../components/admin/interfaces/CarsAulas';
 
 export const AsignacionAlumnos = () => {
   return (

@@ -1,16 +1,14 @@
 import { Button, Table, Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { AsignarAulaUsuarioAlumno } from './CRUD_usuarioAlumno/AsignarAulaUsuarioAlumno';
-import { AgregarUsuarioAlumno } from './CRUD_usuarioAlumno/AgregarUsuarioAlumno';
-import { EditarUsuarioAlumno } from './CRUD_usuarioAlumno/EditarUsuarioAlumno';
-import '../../css/componentes.css'
-import { BusquedaUsuarioAlumno } from './CRUD_usuarioAlumno/BusquedaUsuarioAlumno';
+import { Editar } from '../Editar';
+import '../../../css/componentes.css'
+import { BusquedaUsuarioAlumno } from '../CRUD_usuarioAlumno/BusquedaUsuarioAlumno';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSchool, faUser, faUserCheck, faUserEdit, faUserMinus, faUserPlus, faUserSlash, faUserTimes } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserCheck, faUserEdit, faUserTimes } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
-import { ApiGetUsuariosAlumnoDesactivados } from '../../apis/AdminApis';
-import { UsuarioAlumnoActivar } from './CRUD_usuarioAlumno/putUsuarioAlumno';
+import { registroUsuarioAlumno } from '../../../apis/AdminApis';
+import { editDelete } from '../editDelete';
 
 export const TablaUsuarioAlumnosDesactivados = () => {
 
@@ -22,15 +20,16 @@ export const TablaUsuarioAlumnosDesactivados = () => {
 
     const [usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado] = useState({})
 
-    const getUser = async () => {
-        const { data } = await axios.get(ApiGetUsuariosAlumnoDesactivados);
+    const mostrarUsuarios = async () => {
+        const { data } = await axios.get(registroUsuarioAlumno.getAlumnosDesactivados);
         setTablaUsuario(data)
         setUsuarios(data)
     }
 
     useEffect(() => {
-        getUser()
+        mostrarUsuarios()
     }, [])
+
 
     const seleccionarPais = (element: {}, caso: string) => {
         switch (caso) {
@@ -80,19 +79,39 @@ export const TablaUsuarioAlumnosDesactivados = () => {
                                 <Button
                                     className='boton'
                                     variant="info"
-                                    onClick={() => { UsuarioAlumnoActivar(element.Usuario, getUser) }}>
-                                    <FontAwesomeIcon icon={faUserCheck} />{' '}Activar
+                                    onClick={() => {
+                                        editDelete(
+                                            mostrarUsuarios,
+                                            registroUsuarioAlumno.putActivar + element.Usuario.idusuarios,
+                                            'ACTIVAR',
+                                            `Estas seguro de HABILITAR al alumno: ${element.Usuario.apellidos} ${element.Usuario.nombres}!`,
+                                            'info',
+                                            'Editar'
+                                        )
+                                    }}>
+                                    <FontAwesomeIcon icon={faUserCheck} />{' '}Habilitar
                                 </Button>
                                 <Button
                                     className='boton'
                                     variant="warning"
-                                    onClick={() => { seleccionarPais(element.Usuario, 'Editar') }}>
+                                    onClick={() => {
+                                        seleccionarPais(element.Usuario, 'Editar')
+                                    }}>
                                     <FontAwesomeIcon icon={faUserEdit} />{' '}Editar
                                 </Button>
                                 <Button
                                     className='boton'
                                     variant="danger"
-                                    onClick={() => { UsuarioAlumnoActivar(element, getUser) }}>
+                                    onClick={() => {
+                                        editDelete(
+                                            mostrarUsuarios,
+                                            registroUsuarioAlumno.deletAlumnos + element.idalumnos,
+                                            'ELIMINAR',
+                                            `Estas seguro de ELIMINAR al alumno: ${element.Usuario.apellidos} ${element.Usuario.nombres}!`,
+                                            'error',
+                                            'Eliminar'
+                                        )
+                                    }}>
                                     <FontAwesomeIcon icon={faUserTimes} />{' '}Eliminar
                                 </Button>
                             </td>
@@ -100,12 +119,12 @@ export const TablaUsuarioAlumnosDesactivados = () => {
                     ))}
                 </tbody>
             </Table>
-            <EditarUsuarioAlumno
+            <Editar
                 show={showEditar}
                 setShow={setShowEditar}
-                usuarioAlumnoSeleccionado={usuarioAlumnoSeleccionado}
-                setUsuarioAlumnoSeleccionado={setUsuarioAlumnoSeleccionado}
-                getUser={getUser} />
+                state={usuarioAlumnoSeleccionado}
+                setState={setUsuarioAlumnoSeleccionado}
+                mostrarUsuarios={mostrarUsuarios} />
         </Container>
     )
 }
