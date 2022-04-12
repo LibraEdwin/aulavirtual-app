@@ -31,7 +31,7 @@ export const TableUsuariosAlumnos = () => {
     const [api, setApi] = useState('')
 
     //captura del imput
-    const [usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado] = useState({})
+    const [usuarioAlumnoSeleccionado, setUsuarioAlumnoSeleccionado]: any = useState({})
 
     const registroActivados = async () => {
         const { data } = await axios.get(registroUsuarioAlumno.getAlumnosActivados);
@@ -57,8 +57,14 @@ export const TableUsuariosAlumnos = () => {
         mostrarUsuarios()
     }, [])
 
-    const seleccionarPais = (element: {}, caso: string) => {
+    const [id, setId] = useState('')
+    const [text, setText] = useState('')
+    const [idusuario, setIdusuario] = useState('')
+
+    const seleccionarPais = (element: any, caso: string) => {
         setUsuarioAlumnoSeleccionado(element)
+        setId(element.idalumnos)
+        setIdusuario(element.Usuario.idusuarios)
         switch (caso) {
             case 'Editar':
                 setShowEditar(true)
@@ -74,16 +80,25 @@ export const TableUsuariosAlumnos = () => {
                 setShowEliminar(true)
                 setOperacion('Eliminar')
                 setApi(registroUsuarioAlumno.deleteAlumnos)
+                setText(`${element.Usuario.apellidos} ${element.Usuario.nombres}`)
                 break;
             case 'Desabilitar':
                 setShowEliminar(true)
                 setOperacion('Desabilitar')
                 setApi(registroUsuarioAlumno.putDesactivar)
+                setText(`${element.Usuario.apellidos} ${element.Usuario.nombres}`)
                 break;
             case 'Habilitar':
                 setShowEliminar(true)
                 setOperacion('Habilitar')
                 setApi(registroUsuarioAlumno.putActivar)
+                setText(`${element.Usuario.apellidos} ${element.Usuario.nombres}`)
+                break;
+            case 'Asignar':
+                setShowEliminar(true)
+                setOperacion('Asignar')
+                setApi(registroUsuarioAlumno.putAsignar)
+                setText(`${element.Usuario.apellidos} ${element.Usuario.nombres}`)
                 break;
         }
     }
@@ -166,10 +181,7 @@ export const TableUsuariosAlumnos = () => {
                                             className='boton'
                                             variant="success"
                                             onClick={() => {
-                                                AsignarAulaUsuarioAlumno(
-                                                    element,
-                                                    mostrarUsuarios
-                                                )
+                                                seleccionarPais(element, 'Asignar')
                                             }}>
                                             <FontAwesomeIcon icon={faSchool} />{' '}Asignar
                                         </Button>
@@ -238,7 +250,10 @@ export const TableUsuariosAlumnos = () => {
                 state={usuarioAlumnoSeleccionado}
                 mostrarUsuarios={mostrarUsuarios}
                 operacion={operacion}
-                api={api} />
+                api={api}
+                id={id}
+                text={text}
+                idusuario={idusuario} />
         </>
     )
 }

@@ -1,20 +1,15 @@
 import { Button, Form, Modal } from 'react-bootstrap'
 import axios from 'axios';
 import { aviso } from '../Aviso';
+import { FormBotonExtraUsuarioAlumno } from './CRUD_usuarioAlumno/FormBotonExtraUsuarioAlumno';
 
-export const BotonesExtra = ({ show, setShow, state, mostrarUsuarios, operacion, api }: any) => {
+export const BotonesExtra = ({ show, setShow, mostrarUsuarios, operacion, api, id, text, idusuario }: any) => {
 
-    let nombre = null
-    let apellidos = null
-    let id = ''
-    let idusuario = ''
-
-    if (show) {
-        nombre = state.Usuario.nombres
-        apellidos = state.Usuario.apellidos
-        id = state.idalumnos
-        idusuario = state.Usuario.idusuarios
+    let aula: string
+    const eventoAula = (e: any) => {
+        aula = e
     }
+
 
     const Boton = async (operacion: string) => {
         switch (operacion) {
@@ -36,6 +31,14 @@ export const BotonesExtra = ({ show, setShow, state, mostrarUsuarios, operacion,
                 setShow(false)
                 aviso()
                 break;
+            case 'Asignar':
+                if (aula != undefined) {
+                    await axios.put(api + id, { aulas_idaulas: aula })
+                    mostrarUsuarios()
+                    setShow(false)
+                    aviso()
+                }
+                break;
         }
     }
 
@@ -48,11 +51,10 @@ export const BotonesExtra = ({ show, setShow, state, mostrarUsuarios, operacion,
                 <Modal.Title>{operacion}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group >
-                        <Form.Label>Seguro de {operacion} a {apellidos + ' ' + nombre}</Form.Label>
-                    </Form.Group>
-                </Form>
+                <FormBotonExtraUsuarioAlumno
+                    operacion={operacion}
+                    text={text}
+                    eventoAula={eventoAula} />
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => { Boton(operacion) }}>
