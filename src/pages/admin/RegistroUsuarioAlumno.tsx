@@ -1,10 +1,10 @@
 import { Container } from 'react-bootstrap'
-import { TableUsuariosAlumnosActivados } from '../../components/admin/interfaces/TableUsuariosAlumnosActivados';
+import { TableUsuariosAlumnos } from '../../components/admin/interfaces/TablaUsuarioAlumno';
 
 export const RegistroUsuarioAlumno = () => {
   return (
     <Container>
-      <TableUsuariosAlumnosActivados />
+      <TableUsuariosAlumnos />
     </Container>
   )
 }

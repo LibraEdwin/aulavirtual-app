@@ -9,7 +9,6 @@ export const FormAgregarUsuarioAlumno = ({ handleImputChange }: any) => {
                     placeholder="Nombres"
                     name="nombres"
                     onChange={handleImputChange} />
-
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Control

@@ -1,20 +1,20 @@
-const url = 'http://localhost:8000/admin/'
+const urlAdmin = 'http://localhost:8000/admin/'
 
 export const registroUsuarioAlumno = {
 
-    getAlumnosActivados: url + 'usuariosAlumnoActivados',
-    getAlumnosDesactivados: url + 'usuariosAlumnoDesactivados',
+    getAlumnosActivados: urlAdmin + 'usuariosAlumnoActivados',
+    getAlumnosDesactivados: urlAdmin + 'usuariosAlumnoDesactivados',
 
-    PostAlumnos: url + 'usuariosAlumno',
+    PostAlumnos: urlAdmin + 'usuariosAlumno',
 
-    PutAlumnos: url + 'usuariosAlumno/',
+    PutAlumnos: urlAdmin + 'usuariosAlumno/',
 
-    putActivar: url + 'usuariosAlumnoActivar/',
-    putDesactivar: url + 'usuariosAlumnoDesactivar/',
+    putActivar: urlAdmin + 'usuariosAlumnoActivar/',
+    putDesactivar: urlAdmin + 'usuariosAlumnoDesactivar/',
 
-    deletAlumnos: url + 'usuariosAlumnoDesactivado/',
+    deleteAlumnos: urlAdmin + 'usuariosAlumnoDesactivado/',
 
-    putAsignar: url + 'asignarAula/',
-    getAulas: url + 'Aula'
+    putAsignar: urlAdmin + 'asignarAula/',
+    getAulas: urlAdmin + 'Aula'
 
 }

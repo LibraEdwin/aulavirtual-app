@@ -1,23 +1,15 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, FormControl } from 'react-bootstrap'
-import '../../../css/barraBuscadora.css'
+import '../../css/barraBuscadora.css'
 
-export const BusquedaUsuarioAlumno = ({ setUsuarios, tablaUsuario, busqueda, setBusqueda }: any) => {
+export const Busqueda = ({ busqueda, setBusqueda, filtrar }: any) => {
 
     const handleChange = (e: any) => {
         setBusqueda(e.target.value)
         filtrar('')
     }
-
-    const filtrar = (terminoBusqueda: any) => {
-        let resultadoBusqueda = tablaUsuario.filter((elemento: any) => {
-            if (elemento.Usuario.apellidos.includes(terminoBusqueda.toLowerCase())) {
-                return elemento
-            }
-        })
-        setUsuarios(resultadoBusqueda)
-    }
+    
     return (
         <>
             <div className='buscador'>
@@ -32,7 +24,7 @@ export const BusquedaUsuarioAlumno = ({ setUsuarios, tablaUsuario, busqueda, set
             <div className="botonBuscar">
                 <Button
                     className='boton'
-                    variant="light"
+                    variant="outline-secondary"
                     onClick={() => { filtrar(busqueda) }}>
                     <FontAwesomeIcon icon={faSearch} />{' '}Buscar
                 </Button>

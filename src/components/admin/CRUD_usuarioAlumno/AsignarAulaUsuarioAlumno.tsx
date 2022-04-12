@@ -3,7 +3,7 @@ import axios from 'axios';
 import { registroUsuarioAlumno } from '../../../apis/AdminApis';
 import { aviso } from '../../Aviso';
 
-export const AsignarAulaUsuarioAlumno = (usuario: any, getUser: any) => {
+export const AsignarAulaUsuarioAlumno = (usuario: any, mostrarUsuarios: any) => {
 
     const AvisoAsignar = async () => {
         const { data } = await axios.get(registroUsuarioAlumno.getAulas)
@@ -16,8 +16,8 @@ export const AsignarAulaUsuarioAlumno = (usuario: any, getUser: any) => {
             inputValidator: (value: any) => {
                 return new Promise(async (resolve) => {
                     await axios.put(registroUsuarioAlumno.putAsignar + usuario.idalumnos, { aulas_idaulas: data[value].idaulas })
+                    mostrarUsuarios()
                     aviso()
-                    getUser()
                 })
             }
         })
