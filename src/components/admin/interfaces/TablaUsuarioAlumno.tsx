@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AsignarAulaUsuarioAlumno } from '../CRUD_usuarioAlumno/AsignarAulaUsuarioAlumno';
 import { Agregar } from '../Agregar';
 import { Busqueda } from '../Busqueda';
 import axios from 'axios';
 import { Editar } from '../Editar';
 import { BotonesExtra } from '../BotonesExtra';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Row, Col, Stack } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSchool, faUserEdit, faUserMinus, faUserPlus, faUserSlash, faUser, faUserTimes, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import '../../../css/componentes.css'
@@ -63,8 +62,6 @@ export const TableUsuariosAlumnos = () => {
 
     const seleccionarPais = (element: any, caso: string) => {
         setUsuarioAlumnoSeleccionado(element)
-        setId(element.idalumnos)
-        setIdusuario(element.Usuario.idusuarios)
         switch (caso) {
             case 'Editar':
                 setShowEditar(true)
@@ -77,24 +74,32 @@ export const TableUsuariosAlumnos = () => {
                 setApi(registroUsuarioAlumno.PostAlumnos)
                 break;
             case 'Eliminar':
+                setId(element.idalumnos)
+                setIdusuario(element.Usuario.idusuarios)
                 setShowEliminar(true)
                 setOperacion('Eliminar')
                 setApi(registroUsuarioAlumno.deleteAlumnos)
                 setText(`${element.Usuario.apellidos} ${element.Usuario.nombres}`)
                 break;
             case 'Desabilitar':
+                setId(element.idalumnos)
+                setIdusuario(element.Usuario.idusuarios)
                 setShowEliminar(true)
                 setOperacion('Desabilitar')
                 setApi(registroUsuarioAlumno.putDesactivar)
                 setText(`${element.Usuario.apellidos} ${element.Usuario.nombres}`)
                 break;
             case 'Habilitar':
+                setId(element.idalumnos)
+                setIdusuario(element.Usuario.idusuarios)
                 setShowEliminar(true)
                 setOperacion('Habilitar')
                 setApi(registroUsuarioAlumno.putActivar)
                 setText(`${element.Usuario.apellidos} ${element.Usuario.nombres}`)
                 break;
             case 'Asignar':
+                setId(element.idalumnos)
+                setIdusuario(element.Usuario.idusuarios)
                 setShowEliminar(true)
                 setOperacion('Asignar')
                 setApi(registroUsuarioAlumno.putAsignar)
@@ -115,50 +120,51 @@ export const TableUsuariosAlumnos = () => {
     return (
         <>
             {(estado && (<h1>Activado</h1>)) || (!estado && (<h1>Desactivado</h1>))}
-            <div className='filtro grupoBarra'>
-                <div className='filtro barra'>
-                    <Busqueda
-                        busqueda={busqueda}
-                        setBusqueda={setBusqueda}
-                        filtrar={filtrar} />
-                </div>
-
-                {(estado && (
-                    <div className='BotonAgregar'>
-                        <Button
-                            className='boton'
-                            variant="primary"
-                            onClick={() => {
-                                seleccionarPais({}, 'Agregar')
-                                registroActivados()
-                            }}>
-                            <FontAwesomeIcon icon={faUserPlus} />{' '}Agregar
-                        </Button>
-                        <Button
-                            className='boton'
-                            variant="dark"
-                            onClick={() => {
-                                setEstado(false)
-                                registroDesactivados()
-                            }}>
-                            <FontAwesomeIcon icon={faUserSlash} />{' '}Desabilitados
-                        </Button>
+            <Row className="justify-content-md-center boton">
+                <Col md='8'>
+                    <div >
+                        <Busqueda
+                            busqueda={busqueda}
+                            setBusqueda={setBusqueda}
+                            filtrar={filtrar} />
                     </div>
-                )) || (!estado && (
-                    <div className='BotonAgregar'>
-                        <Button
-                            className='boton'
-                            variant="dark"
-                            onClick={() => {
-                                setEstado(true)
-                                registroActivados()
-                            }}>
-                            <FontAwesomeIcon icon={faUser} />{' '}Habilitados
-                        </Button>
-                    </div>
-                ))}
-
-            </div>
+                </Col>
+                <Col md='4' className="justify-content-md-right">
+                    {(estado && (
+                        <div>
+                            <Button
+                                className='botonBarra'
+                                variant="dark"
+                                onClick={() => {
+                                    setEstado(false)
+                                    registroDesactivados()
+                                }}>
+                                <FontAwesomeIcon icon={faUserSlash} />{' '}Desabilitados
+                            </Button>
+                            <Button
+                                className='botonBarra'
+                                variant="primary"
+                                onClick={() => {
+                                    seleccionarPais({}, 'Agregar')
+                                    registroActivados()
+                                }}>
+                                <FontAwesomeIcon icon={faUserPlus} />{' '}Agregar
+                            </Button>
+                        </div>
+                    )) || (!estado && (
+                        <div >
+                            <Button
+                                variant="dark"
+                                onClick={() => {
+                                    setEstado(true)
+                                    registroActivados()
+                                }}>
+                                <FontAwesomeIcon icon={faUser} />{' '}Habilitados
+                            </Button>
+                        </div>
+                    ))}
+                </Col>
+            </Row>
             <Table striped bordered hover className='tabla'>
                 <thead>
                     <tr>

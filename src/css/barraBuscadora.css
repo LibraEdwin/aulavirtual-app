@@ -1,21 +1,5 @@
-.grupoBarra{
-    width: 100%;
-    padding: 10px;
+.botonBarra{
     margin: auto;
-}
-
-.barra{
-    margin: auto;
-    margin-left: 0;
-    width: 75%;
-}
-
-.buscador{
-    width: 85%;
-    margin: auto;
-}
-
-.BotonAgregar{
-    margin: auto;
-    margin-right: 0;
+    margin-left: 2px;
+    margin-right: 2px;
 }
