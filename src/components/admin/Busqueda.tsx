@@ -1,6 +1,6 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Col, FormControl, Row, Stack } from 'react-bootstrap'
+import { Button, Col, FormControl, Row } from 'react-bootstrap'
 import '../../css/barraBuscadora.css'
 
 export const Busqueda = ({ busqueda, setBusqueda, filtrar }: any) => {

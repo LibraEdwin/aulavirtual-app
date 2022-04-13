@@ -1,0 +1,30 @@
+.FigurePerfil{
+    margin: auto;
+    margin-top: 5px;
+}
+.RowPerfil{
+    margin: 10px;
+}
+.perfil {
+    margin: auto;
+    border-radius: 50%;
+    max-width: 150px;
+    min-width: 150px;
+    max-height: 120px;
+    min-height: 120px;
+}
+.perfilTextCenter{
+    text-align: center;
+}
+.perfilText{
+    text-align: left;
+}
+.perfilNombres{
+    font-size: 1.5em;
+}
+.perfilCorreo{
+    font-size: 2.5em;
+}
+.perfilRol{
+    font-size: 1.5em;
+}

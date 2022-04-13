@@ -119,7 +119,6 @@ export const TableUsuariosAlumnos = () => {
 
     return (
         <>
-            {(estado && (<h1>Activado</h1>)) || (!estado && (<h1>Desactivado</h1>))}
             <Row className="justify-content-md-center boton">
                 <Col md='8'>
                     <div >
